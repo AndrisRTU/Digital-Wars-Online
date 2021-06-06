@@ -6,7 +6,6 @@ enum class OnlineGameEvent {
     setSeed,
     start,
     joinedLobby,
-    leftLobby,
     returnedToLobby,
     wroteToChat,
     receiveOpponentName,

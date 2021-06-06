@@ -21,7 +21,6 @@ public:
     GameHandler();
     PlayerController& getPlayerController();
     VisualGameArea& getGameArea();
-    virtual void gameEnded() override;
     virtual void startNewGame(NewGameState state, uint8_t size, Player firstPlayer, uint8_t firstPlayerDifficulty, Player secondPlayer, uint8_t secondPlayerDifficulty) override;
     virtual void startNewGame() override;
     virtual void startOnlineGame() override;

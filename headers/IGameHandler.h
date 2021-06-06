@@ -9,7 +9,6 @@ class IGameHandler {
 public:
     virtual void startNewGame(NewGameState state, uint8_t size, Player firstPlayer, uint8_t firstPlayerDifficulty, Player secondPlayer, uint8_t secondPlayerDifficulty) = 0;
     virtual void startNewGame() = 0;
-    virtual void gameEnded() = 0;
     virtual void startOnlineGame() = 0;
     virtual void stopGame() = 0;
     virtual const GameScene& getScene() const = 0;
