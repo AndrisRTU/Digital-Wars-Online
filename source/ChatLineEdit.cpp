@@ -5,11 +5,7 @@ ChatLineEdit::ChatLineEdit(QTextEdit& receiver) :
     receiver(receiver),
     lastMesageTime(0),
     initialText("") {
-    connect(this, &QLineEdit::textChanged, this, [this](){
-        if (text().size() > 200) {
-            setText(text().left(200));
-        }
-    });
+    setMaxLength(200);
 }
 
 void ChatLineEdit::keyPressEvent(QKeyEvent* event) {
