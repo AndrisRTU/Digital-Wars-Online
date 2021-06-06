@@ -19,7 +19,6 @@ class MainWindow : public QMainWindow, public IMainWindow {
     Q_OBJECT
 private:
     Ui::MainWindow *ui;
-    QWidget* window;
     std::unique_ptr<GameScoreArea> scoreArea;
     std::unique_ptr<VisualGameArea> visualArea;
     std::unique_ptr<ChatLineEdit> chatLineEdit;
@@ -30,6 +29,7 @@ private:
     virtual void goToGameAction() override;
     void goToOnlinePage();
     virtual void goToLobbyPage() override;
+    void goToCreditsPage();
     void setSlotsLocalGame();
     void setSlotsOnlineGame();
     void setComboboxIsAcitve(bool isActive);
@@ -53,6 +53,10 @@ private slots:
     void leaveLocalGame();
     void restartOnlineGame();
     void leaveOnlineGame();
+    void on_nameLineEdit_textEdited(const QString &arg1);
+    void on_PlayOnlineGameButton_2_clicked();
+    void on_pushButton_3_clicked();
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
