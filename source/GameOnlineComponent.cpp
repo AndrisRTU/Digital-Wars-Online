@@ -18,13 +18,7 @@ void GameOnlineComponent::setEventActionsMap() {
         const QString message = "[" + QDateTime::currentDateTime().time().toString() + QString("] ") + opponentName + QString(": ") + str;
         window->eventHappened(OnlineGameEvent::wroteToChat, message);
     };
-    eventActionsMap[OnlineGameEvent::leftLobby] = [&](const QString& str) {
-        const QString message = "[" + QDateTime::currentDateTime().time().toString() + QString("] ") + opponentName + QString(" has left the lobby");
-        window->eventHappened(OnlineGameEvent::wroteToChat, message);
-        window->removePlayersFromCombobox(opponentName);
-    };
     eventActionsMap[OnlineGameEvent::returnedToLobby] = [&](const QString& str) {
-        window->eventHappened(OnlineGameEvent::wroteToChat, opponentName + " returned to lobby");
         window->setMessageToInformativeLabel(opponentName + QString(" has returned to lobby"));
     };
 }

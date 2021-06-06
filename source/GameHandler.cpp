@@ -45,10 +45,6 @@ VisualGameArea& GameHandler::getGameArea() {
     return *gameArea;
 }
 
-void GameHandler::gameEnded() {
-    gameController->gameEnded();
-}
-
 void GameHandler::startNewGame(NewGameState state, uint8_t size, Player firstPlayer, uint8_t firstPlayerDifficulty, Player secondPlayer, uint8_t secondPlayerDifficulty) {
     gameController = std::make_unique<GameController>(*playerController, *scene, *gameArea, *scoreArea);
     scoreArea->setPlayers(firstPlayer, secondPlayer);
@@ -105,7 +101,6 @@ void GameHandler::joinGame(const QString& host, uint16_t port, const QString& na
 }
 
 void GameHandler::lobbyLeft() {
-    onlineComponent->receiveEvent(OnlineGameEvent::leftLobby, "");
     onlineComponent.reset();
     gameController.reset();
 }

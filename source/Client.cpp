@@ -49,3 +49,7 @@ void Client::setEventActionsMap() {
         window->clientConnected();
     };
 }
+
+void Client::serverClosed() {
+
+}

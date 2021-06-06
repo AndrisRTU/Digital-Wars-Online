@@ -52,5 +52,8 @@ void Server::userConnected() {
 }
 
 void Server::userDisconnected() {
-    handler.gameEnded();
+    window->setMessageToInformativeLabel(opponentName + QString(" has disconnected"));
+    QString message = "[" + QDateTime::currentDateTime().time().toString() + QString("] ") + opponentName + QString(" has left the lobby");
+    window->eventHappened(OnlineGameEvent::wroteToChat, message);
+    window->removePlayersFromCombobox(opponentName);
 }

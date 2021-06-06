@@ -239,7 +239,6 @@ void MainWindow::on_joinButton_clicked() {
 }
 
 void MainWindow::on_pushButton_2_clicked() {
-    onlineReceiver->receiveEvent(OnlineGameEvent::leftLobby, "");
     handler->lobbyLeft();
     goToOnlinePage();
 }
