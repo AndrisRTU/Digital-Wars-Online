@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QGridLayout>
 
 template <typename T>
 void addItemIntoCombobox(QComboBox& combobox, const QString& item, T value) {
@@ -9,16 +10,20 @@ void addItemIntoCombobox(QComboBox& combobox, const QString& item, T value) {
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    window(new QWidget()),
     handler(nullptr),
     onlineReceiver(nullptr) {
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(0);
+
     scoreArea = std::make_unique<GameScoreArea>(*ui->firstPlayerScore, *ui->firstPlayerTextScore, *ui->secondPlayerScore, *ui->secondPlayerTextScore, *ui->winStatisticLabel);
+
     visualArea = std::make_unique<VisualGameArea>();
     ui->GameActionPage->layout()->addWidget(visualArea.get());
+
     chatLineEdit = std::make_unique<ChatLineEdit>(*ui->chatTextEdit);
-    ui->LobbyPage->layout()->addWidget(chatLineEdit.get());
+    QGridLayout* layout = reinterpret_cast<QGridLayout*>(ui->LobbyPage->layout());
+    layout->addWidget(chatLineEdit.get(), 12, 1, 1, 2);
+
     addItemIntoCombobox(*ui->firstTurnCombobox, "Random", NewGameState::Random);
     addItemIntoCombobox(*ui->firstTurnCombobox, "First player", NewGameState::FirstPlayerTurn);
     addItemIntoCombobox(*ui->firstTurnCombobox, "Second player", NewGameState::SecondPlayerTurn);
@@ -46,12 +51,13 @@ MainWindow::MainWindow(QWidget *parent) :
         addItemIntoCombobox(*ui->boardSizeCombobox, size + "x" + size, i);
         addItemIntoCombobox(*ui->boardSizeOnlineCombobox, size + "x" + size, i);
     }
-    ui->firstPlayerAIDifficultyCombobox->hide();
-    ui->secondPlayerAIDifficultyCombobox->hide();
 
     for (int i = 15; i <= 60; i += 15) {
         addItemIntoCombobox(*ui->timerOnlineCombobox, QString::number(i), i);
     }
+
+    ui->firstPlayerAIDifficultyCombobox->hide();
+    ui->secondPlayerAIDifficultyCombobox->hide();
 }
 
 MainWindow::~MainWindow() {
@@ -86,6 +92,10 @@ void MainWindow::goToLobbyPage() {
     ui->stackedWidget->setCurrentIndex(4);
 }
 
+void MainWindow::goToCreditsPage() {
+    ui->stackedWidget->setCurrentIndex(5);
+}
+
 void MainWindow::setSlotsLocalGame() {
     ui->returnButton->disconnect();
     ui->restartButton->disconnect();
@@ -111,7 +121,7 @@ void MainWindow::startLocalGame() {
     const NewGameState gameState = qvariant_cast<NewGameState>(ui->firstTurnCombobox->currentData());
     const uint8_t boardSize = qvariant_cast<uint8_t>(ui->boardSizeCombobox->currentData());
     const Player firstPlayer = qvariant_cast<Player>(ui->firstPlayerCombobox->currentData());
-    const uint8_t firstPlayerDifficulty = qvariant_cast<uint8_t>(ui->firstPlayerAIDifficultyCombobox->currentData());
+    const uint8_t firstPlayerDifficulty = qvariant_cast<uint8_t>(ui->firstPlayerAIDifficultyCombobox->currentText());
     const Player secondPlayer = qvariant_cast<Player>(ui->secondPlayerCombobox->currentData());
     const uint8_t secondPlayerDifficulty = qvariant_cast<uint8_t>(ui->secondPlayerAIDifficultyCombobox->currentText());
     handler->startNewGame(gameState, boardSize, firstPlayer, firstPlayerDifficulty, secondPlayer, secondPlayerDifficulty);
@@ -235,7 +245,7 @@ void MainWindow::on_joinButton_clicked() {
     const QString name = ui->nameLineEdit->text();
     addPlayersToCombobox(name);
     chatLineEdit->setInitialText(name + ": ");
-    handler->joinGame(ui->IPAddressLineEdit->text(), ui->portLineEdit->text().toUInt(), ui->nameLineEdit->text());
+    handler->joinGame(ui->IPAddressLineEdit->text(), ui->portLineEdit->text().toUInt(), ui->nameLineEdit->text().trimmed());
 }
 
 void MainWindow::on_pushButton_2_clicked() {
@@ -308,6 +318,7 @@ void MainWindow::on_timerOnlineCombobox_activated(int index) {
 void MainWindow::on_startGameOnlineButton_clicked() {
     setSlotsOnlineGame();
     ui->gameActionInformativeLabel->clear();
+    ui->restartButton->show();
     handler->startOnlineGame();
     goToGameAction();
 }
@@ -339,4 +350,19 @@ void MainWindow::clientConnected() {
     ui->gameActionInformativeLabel->clear();
     ui->restartButton->hide();
     setSlotsOnlineGame();
+}
+
+void MainWindow::on_nameLineEdit_textEdited(const QString &arg1) {
+    if (arg1.size() > 20) {
+        QString cutStr = arg1.left(20);
+        ui->nameLineEdit->setText(cutStr);
+    }
+}
+
+void MainWindow::on_PlayOnlineGameButton_2_clicked() {
+    goToCreditsPage();
+}
+
+void MainWindow::on_pushButton_3_clicked() {
+    goToMainMenu();
 }
