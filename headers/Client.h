@@ -9,8 +9,6 @@ private:
     Movement movement;
     uint8_t x, y;
     virtual void setEventActionsMap() override;
-private slots:
-    void serverClosed();
 public:
     Client(const QString& host, uint16_t port, GameHandler& handler, const QString& playerName);
     ~Client();
