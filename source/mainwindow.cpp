@@ -350,6 +350,7 @@ void MainWindow::clientConnected() {
     ui->gameActionInformativeLabel->clear();
     ui->restartButton->hide();
     setSlotsOnlineGame();
+    goToGameAction();
 }
 
 void MainWindow::on_nameLineEdit_textEdited(const QString &arg1) {

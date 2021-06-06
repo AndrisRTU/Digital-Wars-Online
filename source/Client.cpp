@@ -45,11 +45,6 @@ void Client::setEventActionsMap() {
     };
     eventActionsMap[OnlineGameEvent::start] = [&](const QString& str) {
         handler.startNewGame();
-        window->goToGameAction();
         window->clientConnected();
     };
-}
-
-void Client::serverClosed() {
-
 }
