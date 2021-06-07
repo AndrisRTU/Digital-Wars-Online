@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(0);
 
+    ui->nameLineEdit->setMaxLength(20);
+
     scoreArea = std::make_unique<GameScoreArea>(*ui->firstPlayerScore, *ui->firstPlayerTextScore, *ui->secondPlayerScore, *ui->secondPlayerTextScore, *ui->winStatisticLabel);
 
     visualArea = std::make_unique<VisualGameArea>();
@@ -351,13 +353,6 @@ void MainWindow::clientConnected() {
     ui->restartButton->hide();
     setSlotsOnlineGame();
     goToGameAction();
-}
-
-void MainWindow::on_nameLineEdit_textEdited(const QString &arg1) {
-    if (arg1.size() > 20) {
-        QString cutStr = arg1.left(20);
-        ui->nameLineEdit->setText(cutStr);
-    }
 }
 
 void MainWindow::on_PlayOnlineGameButton_2_clicked() {
