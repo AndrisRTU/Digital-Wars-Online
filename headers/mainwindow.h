@@ -53,7 +53,6 @@ private slots:
     void leaveLocalGame();
     void restartOnlineGame();
     void leaveOnlineGame();
-    void on_nameLineEdit_textEdited(const QString &arg1);
     void on_PlayOnlineGameButton_2_clicked();
     void on_pushButton_3_clicked();
 
