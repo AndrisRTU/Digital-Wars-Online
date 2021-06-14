@@ -18,7 +18,7 @@ protected:
     IGameOnlineController* receiver;
     IMainWindow* window;
     std::unordered_map<OnlineGameEvent, std::function<void(const QString&)>> eventActionsMap;
-    void sendData(QTcpSocket* socket, OnlineGameEvent event, const QString& str);
+    void sendData(QTcpSocket* socket, OnlineGameEvent event, const QString& str = "");
     virtual void setEventActionsMap();
 protected slots:
     void readForData();
@@ -30,7 +30,7 @@ public:
     virtual void setPositionReceiver(IGameOnlineController* receiver) override;
     virtual void setWindow(IMainWindow* window) override;
     virtual void setFirstTurn(GameTurn turn) override;
-    virtual void receiveEvent(OnlineGameEvent event, const QString& item) override;
+    virtual void receiveEvent(OnlineGameEvent event, const QString& item = "") override;
     virtual QString getPlayerName() override;
     virtual QString getOpponentName() override;
 };
