@@ -341,7 +341,7 @@ void MainWindow::restartOnlineGame() {
 
 void MainWindow::leaveOnlineGame() {
     goToLobbyPage();
-    onlineReceiver->receiveEvent(OnlineGameEvent::returnedToLobby, "");
+    onlineReceiver->receiveEvent(OnlineGameEvent::returnedToLobby);
 }
 
 void MainWindow::setMessageToInformativeLabel(const QString& str) {

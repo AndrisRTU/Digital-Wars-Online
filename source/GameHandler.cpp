@@ -34,7 +34,7 @@ void GameHandler::startOnlineGame() {
     generator->setSeed(time);
     onlineComponent->receiveEvent(OnlineGameEvent::setSeed, QString::number(time));
     startNewGame();
-    onlineComponent->receiveEvent(OnlineGameEvent::start, "");
+    onlineComponent->receiveEvent(OnlineGameEvent::start);
 }
 
 PlayerController& GameHandler::getPlayerController() {

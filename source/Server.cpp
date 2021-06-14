@@ -32,7 +32,7 @@ void Server::userConnected() {
     socket = server->nextPendingConnection();
     connect(socket, &QTcpSocket::disconnected, this, &Server::userDisconnected);
     connect(socket, SIGNAL(readyRead()), this, SLOT(readForData()));
-    sendData(socket, OnlineGameEvent::joinedLobby, "");
+    sendData(socket, OnlineGameEvent::joinedLobby);
     sendData(socket, OnlineGameEvent::receiveOpponentName, playerName);
     sendData(socket, OnlineGameEvent::firstPlayerBoxChanged, window->getFirstPlayer());
     sendData(socket, OnlineGameEvent::secondPlayerBoxChanged, window->getFirstPlayer());
